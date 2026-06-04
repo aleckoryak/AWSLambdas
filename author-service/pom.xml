@@ -102,12 +102,13 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>shade-aws-lambda</id>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <transformers>
+                            <transformers combine.self="override">
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/spring.handlers</resource>
                                 </transformer>
