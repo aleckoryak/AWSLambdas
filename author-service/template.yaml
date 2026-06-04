@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  GetAuthorsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      # Use Spring Cloud Function's generic infrastructure router entrypoint
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+      Runtime: java21
+      MemorySize: 2048
+      Timeout: 30
+
+      # Turn on SnapStart optimization
+      SnapStart:
+        ApplyOn: PublishedVersions
+
+      # Generate an explicit version identifier mapping automatically on deploy
+      AutoPublishAlias: live
+
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: getAuthors
+          # Disable default runtime lazy initialization overrides
+          AWS_SERVERLESS_JAVA_CONTAINER_INIT_DISABLE: 'true'
+          # Disable heavy spring boot banner text prints
+          SPRING_MAIN_BANNER_MODE: 'off'

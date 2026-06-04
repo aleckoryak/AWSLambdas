@@ -1,0 +1,6 @@
+spring:
+  main:
+    banner-mode: "off" # Slightly speeds up context startup time
+  cloud:
+    function:
+      definition: getAuthors
